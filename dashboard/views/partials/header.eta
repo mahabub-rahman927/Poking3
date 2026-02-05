@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        crossorigin="anonymous" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="/css/phoenix.css">
+  <link rel="stylesheet" href="/css/dropzone.css">
+  <link rel="stylesheet" href="/css/custom.css">
+
+  <title>Goat Bot</title>
+  <link rel="icon" href="/images/logo.png" type="image/icon type">
+
+  <!-- Bootstrap + jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Utils -->
+  <script src="/js/copyToClipboard.js"></script>
+  <script src="/js/list.min.js"></script>
+  <script src="/js/hwt.js"></script>
+
+  <!-- 🔥 NEON NEXT-LEVEL STYLE -->
+  <style>
+    :root{
+      --bg:#0b0f1a;
+      --glass:rgba(255,255,255,0.08);
+      --border:rgba(255,255,255,0.15);
+      --neon1:#9D00FF;
+      --neon2:#00E5FF;
+      --neon3:#00FF9C;
+      --text:#eaeaff;
+    }
+
+    body{
+      background: radial-gradient(circle at top,#11162a,#070b14);
+      color:var(--text);
+    }
+
+    /* Gradient animated text */
+    .gradient-text{
+      background: linear-gradient(90deg,var(--neon1),var(--neon2),var(--neon3));
+      background-size:300%;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      animation: gradientMove 6s infinite linear;
+    }
+
+    @keyframes gradientMove{
+      0%{background-position:0%}
+      100%{background-position:300%}
+    }
+
+    /* Feature list */
+    .feature-list li{
+      padding:10px 0;
+      font-size:1.1rem;
+      transition:.3s;
+    }
+    .feature-list li:hover{
+      color:var(--neon2);
+      transform:translateX(6px);
+    }
+
+    /* Glass section */
+    .neo-section{
+      background:var(--glass);
+      border:1px solid var(--border);
+      backdrop-filter:blur(14px);
+      border-radius:22px;
+      transition:.4s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .neo-section::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(120deg,transparent,rgba(0,229,255,.18),transparent);
+      opacity:0;
+      transition:.4s;
+    }
+
+    .neo-section:hover::before{
+      opacity:1;
+    }
+
+    .neo-section:hover{
+      transform:translateY(-8px) scale(1.02);
+      box-shadow:0 25px 60px rgba(0,0,0,.6);
+    }
+
+    /* Button pulse */
+    .pulse{
+      animation:pulseGlow 2s infinite;
+    }
+
+    @keyframes pulseGlow{
+      0%{box-shadow:0 0 15px rgba(157,0,255,.5)}
+      50%{box-shadow:0 0 35px rgba(0,229,255,.9)}
+      100%{box-shadow:0 0 15px rgba(157,0,255,.5)}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <%~ includeFile("./nav.eta", { user: user }); %>
+</header>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="/js/toast.js"></script>
+
+<script>
+/* ===== Highlight + Autocomplete (UNCHANGED, SAFE) ===== */
+$.fn.highlight = function (words) {
+  var id = $(this).attr('id');
+  if (typeof words === "string") words = [words];
+  words = words.map(w => typeof w === "string" ? { name:w, desc:"" } : w);
+  const el = $("#" + id);
+  let text = el.text();
+  for (const v of words) {
+    text = text.replace(new RegExp(v.name,"g"),
+      `<span class="highlight">${v.name}</span>`);
+    el.html(text);
+  }
+  el.focusEnd();
+  return this;
+};
+
+$.fn.focusEnd = function () {
+  $(this).focus();
+  const tmp = $('<span />').appendTo($(this))[0];
+  const range = document.createRange();
+  range.selectNode(tmp);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  tmp.remove();
+  return this;
+};
+</script>
+
+<div style="padding-top: calc(var(--phoenix-navbar-top-height))">
